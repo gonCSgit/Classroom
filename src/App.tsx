@@ -1,10 +1,10 @@
-import { Route, Routes } from "react-router-dom";
-import Header from "./Header/Header";
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
-import Profile from "./Profile/Profile";
-import { AuthContext } from "./context/auth-context";
-import { useCallback, useState } from "react";
+import { Route, Routes } from 'react-router-dom';
+import Header from './Header/Header';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
+import Profile from './Profile/Profile';
+import { AuthContext } from './context/auth-context';
+import { useCallback, useState } from 'react';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -17,15 +17,13 @@ function App() {
     setIsLoggedIn(false);
   }, []);
 
-  
-
   return (
     <AuthContext.Provider
       value={{
         isLoggedIn: isLoggedIn,
         login: login,
         logout: logout,
-        access_key: "",
+        access_key: '',
       }}
     >
       <Header />

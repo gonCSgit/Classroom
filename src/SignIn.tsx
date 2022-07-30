@@ -1,25 +1,25 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { Link as RouterLink, Navigate } from "react-router-dom";
-import { AuthContext } from "./context/auth-context";
-import { useContext } from "react";
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { Link as RouterLink, Navigate } from 'react-router-dom';
+import { AuthContext } from './context/auth-context';
+import { useContext } from 'react';
 
 export default function SignIn() {
   const auth = useContext(AuthContext);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const request = await fetch("http://localhost:3001", {
+    const request = await fetch('http://localhost:3001', {
       headers: {
-        "content-type": "application/json",
+        'content-type': 'application/json',
       },
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify(Object.fromEntries(data)),
     });
     const response = await request.text();
@@ -39,9 +39,9 @@ export default function SignIn() {
       <Box
         sx={{
           marginTop: 20,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
         <Box

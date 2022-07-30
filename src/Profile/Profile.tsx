@@ -1,12 +1,12 @@
-import { Button } from "@mui/material";
-import { useContext } from "react";
-import { AuthContext } from "../context/auth-context";
+import { Button } from '@mui/material';
+import { useContext } from 'react';
+import { AuthContext } from '../context/auth-context';
 
 export default function Profile() {
   const auth = useContext(AuthContext);
   const logoutHandler = () => {
     auth.logout();
-    auth.access_key = "";
+    auth.access_key = '';
   };
 
   return (

@@ -1,23 +1,23 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { Link as RouterLink } from "react-router-dom";
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { Link as RouterLink } from 'react-router-dom';
 
 export default function SignUp() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const request = await fetch("http://localhost:3001/newuser", {
+    const request = await fetch('http://localhost:3001/newuser', {
       headers: {
-        "content-type": "application/json",
+        'content-type': 'application/json',
       },
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify(Object.fromEntries(data)),
     });
     console.log(request.ok);
@@ -29,9 +29,9 @@ export default function SignUp() {
       <Box
         sx={{
           marginTop: 20,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
         <Box
