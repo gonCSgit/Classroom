@@ -6,16 +6,17 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Link as RouterLink, Navigate } from 'react-router-dom';
-import { AuthContext } from './context/auth-context';
+import { Link as RouterLink } from 'react-router-dom';
+import { AuthContext } from '../context/auth-context';
 import { useContext } from 'react';
+import { Grid } from '@mui/material';
 
 export default function SignIn() {
   const auth = useContext(AuthContext);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const request = await fetch('http://localhost:3001', {
+    const request = await fetch('http://localhost:3001/auth/signin', {
       headers: {
         'content-type': 'application/json',
       },
@@ -28,9 +29,9 @@ export default function SignIn() {
     auth.login();
   };
 
-  if (auth.isLoggedIn) {
-    return <Navigate to="/profile" />;
-  }
+  // if (auth.isLoggedIn) {
+  //   return <Navigate to="/profile" />;
+  // }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -59,10 +60,10 @@ export default function SignIn() {
             margin="normal"
             required
             fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
           />
           <TextField
             margin="normal"
@@ -83,9 +84,13 @@ export default function SignIn() {
             Sign In
           </Button>
 
-          <Link component={RouterLink} to="/newuser" variant="body2">
-            Want to create a Teacher account?
-          </Link>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link component={RouterLink} to="/signup" variant="body2">
+                Don't have an account? Sign up
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
     </Container>

@@ -1,10 +1,13 @@
 import { Route, Routes } from 'react-router-dom';
-import Header from './Header/Header';
-import SignIn from './SignIn';
-import SignUp from './SignUp';
-import Profile from './Profile/Profile';
+import SignIn from './Pages/SignIn';
+import SignUp from './Pages/SignUp';
 import { AuthContext } from './context/auth-context';
 import { useCallback, useState } from 'react';
+import Header from './components/Header';
+import Teacher from './Pages/Teacher/Teacher';
+import Student from './Pages/Student/Student';
+import Admin from './Pages/Admin/Admin';
+import Unauthorized from './Pages/Unauthorized';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -26,11 +29,15 @@ function App() {
         access_key: '',
       }}
     >
-      <Header />
       <Routes>
         <Route path="/" element={<SignIn />} />
-        <Route path="/newuser" element={<SignUp />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route element={<Header />}>
+          <Route path="/teacher" element={<Teacher />} />
+          <Route path="/student" element={<Student />} />
+          <Route path="/admin" element={<Admin />} />
+          {/* <Route path="/*" element={<Unauthorized />} /> */}
+        </Route>
       </Routes>
     </AuthContext.Provider>
   );

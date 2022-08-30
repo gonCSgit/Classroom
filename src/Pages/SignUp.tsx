@@ -1,19 +1,21 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import {
+  Button,
+  CssBaseline,
+  TextField,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Container,
+} from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
 export default function SignUp() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const request = await fetch('http://localhost:3001/newuser', {
+    const request = await fetch('http://localhost:3001/auth/signup', {
       headers: {
         'content-type': 'application/json',
       },
@@ -29,30 +31,39 @@ export default function SignUp() {
       <Box
         sx={{
           marginTop: 20,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          bgcolor: '',
         }}
       >
-        <Box
-          sx={{
-            marginBottom: 10,
-          }}
-        >
-          <Typography variant="h2" component="h1">
-            Classroom
-          </Typography>
-        </Box>
-        <Typography variant="h5">Sign Up</Typography>
+        <Typography variant="h5" sx={{ marginBottom: 5, textAlign: 'center' }}>
+          Sign Up
+        </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit}>
           <TextField
             margin="normal"
             required
             fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
+            id="firstName"
+            label="First Name"
+            name="firstName"
+            autoComplete="firstName"
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="lastName"
+            label="Last Name"
+            name="lastName"
+            autoComplete="lastName"
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
           />
 
           <TextField
@@ -77,7 +88,7 @@ export default function SignUp() {
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link component={RouterLink} to="/" variant="body2">
-                Already have a Teacher account? Sign in
+                Already have an account? Sign in
               </Link>
             </Grid>
           </Grid>
