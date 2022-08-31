@@ -10,11 +10,50 @@ import { Link as RouterLink } from 'react-router-dom';
 import { AuthContext } from '../context/auth-context';
 import { useContext } from 'react';
 import { Grid } from '@mui/material';
+import useInput from '../hooks/use-input';
 
 export default function SignIn() {
   const auth = useContext(AuthContext);
+
+  const {
+    value: emailField,
+    isValid: enteredEmailIsValid,
+    hasError: emailError,
+    valueChangeHandler: emailFieldHandler,
+    reset: resetEmailInput,
+    inputBlurHandler: emailBlurHandler,
+  } = useInput(
+    (value: string) =>
+      value.trim() !== '' &&
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value) &&
+      value.length >= 3 &&
+      value.length <= 32,
+  );
+
+  const {
+    value: passwordField,
+    isValid: enteredPasswordIsValid,
+    hasError: passwordError,
+    valueChangeHandler: passwordFieldHandler,
+    reset: resetPasswordInput,
+    inputBlurHandler: passwordBlurHandler,
+  } = useInput(
+    (value: string) => value !== '' && value.length >= 6 && value.length <= 32,
+  );
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    let formIsValid = false;
+
+    if (enteredEmailIsValid && enteredPasswordIsValid) {
+      formIsValid = true;
+    }
+
+    if (!formIsValid) {
+      return;
+    }
+
     const data = new FormData(event.currentTarget);
     const request = await fetch('http://localhost:3001/auth/signin', {
       headers: {
@@ -24,14 +63,11 @@ export default function SignIn() {
       body: JSON.stringify(Object.fromEntries(data)),
     });
     const response = await request.text();
-    auth.access_key = response;
-    console.log(auth.access_key);
+    console.log(response);
     auth.login();
+    resetEmailInput();
+    resetPasswordInput();
   };
-
-  // if (auth.isLoggedIn) {
-  //   return <Navigate to="/profile" />;
-  // }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -64,6 +100,11 @@ export default function SignIn() {
             label="Email Address"
             name="email"
             autoComplete="email"
+            variant="standard"
+            onChange={emailFieldHandler}
+            onBlur={emailBlurHandler}
+            value={emailField}
+            error={emailError}
           />
           <TextField
             margin="normal"
@@ -74,6 +115,11 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            variant="standard"
+            onChange={passwordFieldHandler}
+            onBlur={passwordBlurHandler}
+            value={passwordField}
+            error={passwordError}
           />
           <Button
             type="submit"
