@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -6,15 +5,15 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Link as RouterLink } from 'react-router-dom';
-import { AuthContext } from '../context/auth-context';
-import { useContext } from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Grid } from '@mui/material';
 import useInput from '../hooks/use-input';
+import { User } from '../shared/interfaces';
+import React from 'react';
 
-export default function SignIn() {
-  const auth = useContext(AuthContext);
-
+export default function SignIn(props: {
+  setRoleRoute: React.Dispatch<React.SetStateAction<User>>;
+}) {
   const {
     value: emailField,
     isValid: enteredEmailIsValid,
@@ -41,6 +40,8 @@ export default function SignIn() {
     (value: string) => value !== '' && value.length >= 6 && value.length <= 32,
   );
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -62,11 +63,14 @@ export default function SignIn() {
       method: 'POST',
       body: JSON.stringify(Object.fromEntries(data)),
     });
-    const response = await request.text();
+    const response = await JSON.parse(await request.text());
     console.log(response);
-    auth.login();
+
+    // console.log(JSON.parse(response));
+    props.setRoleRoute(response);
     resetEmailInput();
     resetPasswordInput();
+    navigate('/user');
   };
 
   return (
