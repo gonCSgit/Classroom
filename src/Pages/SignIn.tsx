@@ -56,13 +56,16 @@ export default function SignIn(props: {
     }
 
     const data = new FormData(event.currentTarget);
-    const request = await fetch('http://localhost:3001/auth/signin', {
-      headers: {
-        'content-type': 'application/json',
+    const request = await fetch(
+      'https://classroom-backend-psi.vercel.app/auth/signin',
+      {
+        headers: {
+          'content-type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify(Object.fromEntries(data)),
       },
-      method: 'POST',
-      body: JSON.stringify(Object.fromEntries(data)),
-    });
+    );
     const response = await JSON.parse(await request.text());
     console.log(response);
 
