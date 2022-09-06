@@ -56,24 +56,23 @@ export default function SignIn(props: {
     }
 
     const data = new FormData(event.currentTarget);
-    const request = await fetch(
-      'https://classroom-backend-psi.vercel.app/auth/signin',
-      {
-        headers: {
-          'content-type': 'application/json',
-        },
-        method: 'POST',
-        body: JSON.stringify(Object.fromEntries(data)),
+    const request = await fetch('https://classroom-mu.vercel.app/auth/signin', {
+      headers: {
+        'content-type': 'application/json',
       },
-    );
+      method: 'POST',
+      body: JSON.stringify(Object.fromEntries(data)),
+    });
     const response = await JSON.parse(await request.text());
     console.log(response);
 
     // console.log(JSON.parse(response));
-    props.setRoleRoute(response);
-    resetEmailInput();
+    if (request.ok) {
+      props.setRoleRoute(response);
+      navigate('/user');
+    }
     resetPasswordInput();
-    navigate('/user');
+    resetEmailInput();
   };
 
   return (

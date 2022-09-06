@@ -87,16 +87,13 @@ export default function SignUp() {
       return;
     }
     const data = new FormData(event.currentTarget);
-    const request = await fetch(
-      'https://classroom-backend-psi.vercel.app/auth/signup',
-      {
-        headers: {
-          'content-type': 'application/json',
-        },
-        method: 'POST',
-        body: JSON.stringify(Object.fromEntries(data)),
+    const request = await fetch('https://classroom-mu.vercel.app/auth/signup', {
+      headers: {
+        'content-type': 'application/json',
       },
-    );
+      method: 'POST',
+      body: JSON.stringify(Object.fromEntries(data)),
+    });
     const response = await request.text();
     console.log(JSON.stringify(Object.fromEntries(data)));
     console.log(response);
